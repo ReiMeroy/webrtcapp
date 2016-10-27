@@ -4,12 +4,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>multi firebase</title>
         <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
-        <!--
- <script src="http://localhost:3002/socket.io/socket.io.js"></script>
- -->
-        <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-app.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-database.js"></script>
-
+        <script src="https://www.gstatic.com/firebasejs/3.5.2/firebase.js"></script>
         <script>
             function _assert(desc, v) {
                 if (v) {
@@ -35,16 +30,6 @@
             <video id="local_video" autoplay style="width: 160px; height: 120px; border: 1px solid black;"></video>
         </div>
         <div id="container"></div>
-        <!--
-  <p>SDP to send:<br />
-    <textarea id="text_for_send_sdp" rows="5" cols="60" readonly="readonly">SDP to send</textarea>
-  </p>
-  <p>SDP received:&nbsp;
-    <button type="button" onclick="onSdpText();">Receive remote SDP</button>
-    <br />
-    <textarea id="text_for_receive_sdp" rows="5" cols="60"></textarea>
-  </p>
-  -->
     </body>
     <script type="text/javascript">
         let localVideo = document.getElementById('local_video');
@@ -58,78 +43,6 @@
         // --- multi video ---
         let container = document.getElementById('container');
         _assert('container', container);
-        /*--- not used with adapter.js --
-  // --- prefix -----
-  navigator.getUserMedia  = navigator.getUserMedia    || navigator.webkitGetUserMedia ||
-                            navigator.mozGetUserMedia || navigator.msGetUserMedia;
-  RTCPeerConnection = window.RTCPeerConnection || window.webkitRTCPeerConnection || window.mozRTCPeerConnection;
-  RTCSessionDescription = window.RTCSessionDescription || window.webkitRTCSessionDescription || window.mozRTCSessionDescription;
-  --- not used with adapter.js --*/
-        /*---
-  // ----- use socket.io ---
-  let port = 3002;
-  let socket = io.connect('http://localhost:' + port + '/');
-    let room = getRoomName();
-  socket.on('connect', function(evt) {
-    console.log('socket.io connected. enter room=' + room );
-    socket.emit('enter', room);
-  });
-  socket.on('message', function(message) {
-    console.log('message:', message);
-    let fromId = message.from;
-    if (message.type === 'offer') {
-      // -- got offer ---
-      console.log('Received offer ...');
-      //let offer = message.sessionDescription;
-      let offer = new RTCSessionDescription(message);
-      setOffer(fromId, offer);
-    }
-    else if (message.type === 'answer') {
-      // --- got answer ---
-      console.log('Received answer ...');
-      //let answer = message.sessionDescription;
-      let answer = new RTCSessionDescription(message);
-      setAnswer(fromId, answer);
-    }
-    else if (message.type === 'candidate') {
-      // --- got ICE candidate ---
-      console.log('Received ICE candidate ...');
-      let candidate = new RTCIceCandidate(message.ice);
-      console.log(candidate);
-      addIceCandidate(fromId, candidate);
-    }
-    else if (message.type === 'call me') {
-      if (! isReadyToConnect()) {
-        console.log('Not ready to connect, so ignore');
-        return;
-      }
-      else if (! canConnectMore()) {
-        console.warn('TOO MANY connections, so ignore');
-      }
-      if (isConnectedWith(fromId)) {
-        // already connnected, so skip
-        console.log('already connected, so ignore');
-      }
-      else {
-        // connect new party
-        makeOffer(fromId);
-      }
-    }
-    else if (message.type === 'bye') {
-      if (isConnectedWith(fromId)) {
-        stopConnection(fromId);
-      }
-    }
-  });
-  socket.on('user disconnected', function(evt) {
-    console.log('====user disconnected==== evt:', evt);
-    let id = evt.id;
-    if (isConnectedWith(id)) {
-      stopConnection(id);
-    }
-  });
-  ---*/
-
         // ----- use firebase.io ----
         const dataDebugFlag = false;
         let room = getRoomName();
@@ -322,44 +235,6 @@
                 stopConnection(id);
             }
         }
-        /* --- not used ----
-  // --- remote streams ---
-  const ID_SPLITER = ':';
-  function addRemoteStream(id, stream) {
-    _assert('addRemoteStream() id=' + id + 'stream:', stream);
-    let concatId = id + ID_SPLITER + stream.id;
-    console.log('add remote steram, concatId=' + concatId);
-    _assert('addRemoteStream() stream must NOT EXIST', (! remoteStreams[concatId]));
-    remoteStreams[concatId] = stream;
-  }
-  function getRemoteStream(id) {
-    let stream = remoteStreams[id];
-    _assert('getRemoteStream() stream must exist', stream);
-    return stream;
-  }
-  function deleteRemoteStream(id) {
-    for (let key in remoteStreams) {
-      console.log('concatId=' + concatId);
-      let ids = key.split(ID_SPLITER);
-      let peerId = ids[0];
-      let streamId = ids[1];
-      if (peerId === id) {
-        delete remoteStreams[id];
-      }
-    }
-  }
-  function isRemoteStreamExist(id, stream) {
-    let concatId = id + ID_SPLITER + stream.id;
-    for (let key in remoteStreams) {
-      console.log('isRemoteStreamExist key=' + key);
-      if (key === concatId) {
-        return true;
-      }
-    }
-
-    return false;
-  }
-  --- not used ----*/
         // --- video elements ---
         function attachVideo(id, stream) {
             let video = addRemoteVideoElement(id);
@@ -472,37 +347,8 @@
                 element.src = '';
             }
         }
-        /*--
-  // ----- hand signaling ----
-  function onSdpText() {
-    let text = textToReceiveSdp.value;
-    if (peerConnection) {
-      console.log('Received answer text...');
-      let answer = new RTCSessionDescription({
-        type : 'answer',
-        sdp : text,
-      });
-      setAnswer(answer);
-    }
-    else {
-      console.log('Received offer text...');
-      let offer = new RTCSessionDescription({
-        type : 'offer',
-        sdp : text,
-      });
-      setOffer(offer);
-    }
-    textToReceiveSdp.value ='';
-  }
-  --*/
-
         function sendSdp(id, sessionDescription) {
             console.log('---sending sdp ---');
-            /*---
-    textForSendSdp.value = sessionDescription.sdp;
-    textForSendSdp.focus();
-    textForSendSdp.select();
-    ----*/
             let message = {
                 type: sessionDescription.type,
                 sdp: sessionDescription.sdp
@@ -621,11 +467,6 @@
             });
         }
         function setOffer(id, sessionDescription) {
-            /*
-    if (peerConnection) {
-      console.error('peerConnection alreay exist!');
-    }
-    */
             _assert('setOffer must not connected yet', (!isConnectedWith(id)));
             let peerConnection = prepareNewConnection(id);
             addConnection(id, peerConnection);
@@ -683,16 +524,6 @@
 
         // start PeerConnection
         function connect() {
-            /*
-    debugger; // SHOULD NOT COME HERE
-    if (! peerConnection) {
-      console.log('make Offer');
-      makeOffer();
-    }
-    else {
-      console.warn('peer already exist.');
-    }
-    */
             if (!isReadyToConnect()) {
                 console.warn('NOT READY to connect');
             } else if (!canConnectMore()) {
@@ -703,17 +534,6 @@
         }
         // close PeerConnection
         function hangUp() {
-            /*
-    if (peerConnection) {
-      console.log('Hang up.');
-      peerConnection.close();
-      peerConnection = null;
-      pauseVideo(remoteVideo);
-    }
-    else {
-      console.warn('peer NOT exist.');
-    }
-    */
             emitRoom({type: 'bye'});
             clearMessage(); // clear firebase
             stopAllConnection();
