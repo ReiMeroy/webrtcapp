@@ -30,10 +30,7 @@
         <a id="room_link" href="" target="_blank">Open another window (link to this room)</a>
         <a id="mail_link" href="" target="_blank">Mail link of this room</a>
         <div>
-            <video id="local_video" autoplay style="width: 160px; height: 120px; border: 1px solid black;">
-                <div>けい</div>
-            </video>
-            <div>けい</div>
+            <video id="local_video" autoplay style="width: 160px; height: 120px; border: 1px solid black;"></video>
         </div>
         <div id="container"></div>
     </body>
@@ -284,7 +281,7 @@
             video.style.border = 'solid black 1px';
             video.style.margin = '2px';
             container.appendChild(video);
-            (video).wrap('<div />');
+            video.append('<div>けい</div>');
 
             return video;
         }
