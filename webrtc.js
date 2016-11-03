@@ -542,7 +542,3 @@ function callMe() {
         type: 'call me'
     });
 }
-
-$(function() {
-    $('local_video').draggable();
-});
