@@ -262,6 +262,7 @@ function createVideoElement(elementId) {
     video.width = '240';
     video.height = '180';
     video.id = elementId;
+    video.classNme = "local_video";
     video.style.border = 'solid black 1px';
     video.style.margin = '2px';
     container.appendChild(video);

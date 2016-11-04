@@ -3,6 +3,10 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>multi firebase</title>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.19/jquery-ui.min.js"></script>
+        <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.19/themes/redmond/jquery-ui.css">
+        <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.19/i18n/jquery-ui-i18n.min.js"></script>
         <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-app.js"></script>
         <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-database.js"></script>
 
@@ -33,4 +37,10 @@
         <div id="container"></div>
     </body>
     <script src="webrtc.js"></script>
+    <script>
+        var element = document.getElementById('#local_video');
+        $(function () {
+            $('#local_video').draggable();
+        });
+    </script>
 </html>
