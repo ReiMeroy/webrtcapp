@@ -8,8 +8,8 @@
         <link rel="stylesheet" href="css/jquery-ui.theme.min.css">
         <!-- <script src"jquery-3.1.1.min.js"></script>
         <script src"jquery-ui.min.js"></script> -->
-        <!-- <script src="https://code.jquery.com/jquery-3.1.1.js" integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA=" crossorigin="anonymous"></script>
-        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script> -->
+        <script src="https://code.jquery.com/jquery-3.1.1.js" integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA=" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
         <script src="https://www.gstatic.com/firebasejs/3.6.0/firebase.js"></script>
         <script>
             function _assert(desc, v) {
@@ -35,13 +35,45 @@
         <div>
             <video id="local_video" autoplay style="width: 160px; height: 120px; border: 1px solid black;"></video>
         </div>
+        <button type="button" onclick="vrs();">認識開始</button>
+        <button type="button" onclick="vre();">認識終了</button>
+        <textarea id="result_text" cols="100" rows="10"></textarea>
+        <br>
+        <textarea id="status" cols="100" rows="1"></textarea>
+        <br>
+        <input type="button" onClick="recognition.start();" value="音認開始">
+
         <div id="container"></div>
     </body>
     <script src="webrtc.js"></script>
     <script>
-        // $(function () {
-        //     $("#local_video").draggable();
-        // });
+        window.SpeechRecognition = window.SpeechRecognition || webkitSpeechRecognition;
+        var recognition = new webkitSpeechRecognition();
+        recognition.lang = 'ja';
+        recognition.interimResults = true;
+        recognition.continuous = true;
+
+        recognition.onsoundstart = function () {
+            document.getElementById('status').innerHTML = "認識中";
+        };
+        recognition.onnomatch = function () {
+            document.getElementById('status').innerHTML = "もう一度試してください";
+        };
+        recognition.onerror = function () {
+            document.getElementById('status').innerHTML = "エラー";
+        };
+        recognition.onsoundend = function () {
+            document.getElementById('status').innerHTML = "停止中";
+        };
+
+        var results = event.results;
+        for (var i = event.resultIndex; i < results.length; i++) {
+            if (results[i].isFinal)
+                document.getElementById('result_text').innerHTML = results[i][0].transcript;
+            else
+                document.getElementById('result_text').innerHTML = "[途中経過] " + results[i][0].transcript;
+            }
+        }
     </script>
 
 </html>
