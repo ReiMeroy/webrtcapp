@@ -3,12 +3,12 @@ var nowRecognition = false;
 var $finalSpan = document.querySelector('#final_span');
 var $interimSpan = document.querySelector('#interim_span');
 
-function start () {
+function start() {
     recognition = new webkitSpeechRecognition();
     recognition.lang = document.querySelector('#select2').value;
     recognition.continuous = true;
     recognition.interimResults = true;
-    recognition.onresult = function (e) {
+    recognition.onresult = function(e) {
         var finalText = '';
         var interimText = '';
         for (var i = 0; i < e.results.length; i++) {
@@ -25,12 +25,12 @@ function start () {
     nowRecognition = true;
 };
 
-function stop () {
+function stop() {
     recognition.stop();
     nowRecognition = false;
 }
 
-document.querySelector('#btn2').onclick = function () {
+document.querySelector('#btn2').onclick = function() {
 
     // unsupported.
     if (!'webkitSpeechRecognition' in window) {
