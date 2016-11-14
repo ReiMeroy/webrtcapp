@@ -263,8 +263,8 @@ function deleteRemoteVideoElement(id) {
 
 function createVideoElement(elementId) {
     let video = document.createElement('video');
-    video.width = getWindowHeight();
-    video.height = getWindowWidth();
+    video.width = getWindowWidth();
+    video.height = getWindowHeight();
     video.id = elementId;
     video.clssName = "remote_video";
     video.style.border = 'solid black 1px';
