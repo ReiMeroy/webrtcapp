@@ -1,3 +1,4 @@
+let username = prompt("名前を入力してください");
 let localVideo = document.getElementById('local_video');
 //let remoteVideo = document.getElementById('remote_video');
 let localStream = null;
@@ -263,9 +264,10 @@ function deleteRemoteVideoElement(id) {
 
 function createVideoElement(elementId) {
     let video = document.createElement('video');
+    video.id = elementId;
+    (#elementId).wrap("<div />")
     video.width = 240
     video.height = 180;
-    video.id = elementId;
     video.clssName = "remote_video";
     video.style.border = 'solid black 1px';
     video.style.margin = '2px';

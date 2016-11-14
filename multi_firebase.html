@@ -69,13 +69,19 @@
                         interimText += e.results[i][0].transcript;
                     }
                 }
+                //  if(YouSay(finalText,username)){
+                //
+                //  } コンソールに表示
                 $interimSpan.textContent = interimText;
                 $finalSpan.textContent = finalText;
             };
             recognition.start();
             nowRecognition = true;
         };
+        var YouSay = function (str, s) {
+            return str.indexOf(s) > -1;
 
+        }
         function stop() {
             recognition.stop();
             nowRecognition = false;
