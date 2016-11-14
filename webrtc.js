@@ -1,4 +1,3 @@
-let username = window.prompt("名前を入力してください");
 let localVideo = document.getElementById('local_video');
 //let remoteVideo = document.getElementById('remote_video');
 let localStream = null;
