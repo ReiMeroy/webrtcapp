@@ -80,47 +80,50 @@
             nowRecognition = true;
         };
         var YouSay = function (str, s) {
-            return str.indexOf(s) > -1;
+                return str.indexOf(s) > -1;
 
-        }
-        function stop() {
-            recognition.stop();
-            nowRecognition = false;
-        }
-
-        document.querySelector('#btn2').onclick = function () {
-
-            // unsupported.
-            if (!'webkitSpeechRecognition' in window) {
-                alert('Web Speech API には未対応です.');
-                return;
+            }
+            function stop() {
+                recognition.stop();
+                nowRecognition = false;
             }
 
-            if (nowRecognition) {
-                stop();
-                this.value = '音声認識を継続的に行う';
-                this.className = '';
-            } else {
-                start();
-                this.value = '音声認識を止める';
-                this.className = 'select';
+            document.querySelector('#btn2').onclick = function () {
+
+                // unsupported.
+                if (!'webkitSpeechRecognition' in window) {
+                    alert('Web Speech API には未対応です.');
+                    return;
+                }
+
+                if (nowRecognition) {
+                    stop();
+                    this.value = '音声認識を継続的に行う';
+                    this.className = '';
+                } else {
+                    start();
+                    this.value = '音声認識を止める';
+                    this.className = 'select';
+                }
             }
-        }
-        // VideoElementと名前をオブジェクトとして管理 名前登録コンソール
-        document.addEventListener("dblclick", function (e) {
-            var elem = e.target;
-            if (elem.tagName.toLowerCase() === "video") {
-                var username = window.prompt("名前を入力してください");
-            }
-            if (username === "" && username === "null") {
-                return
-            } else {
+            // VideoElementと名前をオブジェクトとして管理 名前登録コンソール
+            document.addEventListener("dblclick", function (e) {
+                var elem = e.target;
+                if (elem.tagName.toLowerCase() === "video") {
+                    var username = window.prompt("名前を入力してください");
+                }
                 setName(username, elem);
             }
             console.log(getNameElement(username));
-        }, true);
+        },
+        true);
+
         function setName(name, element) {
-            NamedElement[name] = element;
+            if (name === "" && name === "null") {
+                return
+            } else {
+                NamedElement[name] = element;
+            }
         }
         function getNameElement(name) {
             return NamedElement[name];
