@@ -112,6 +112,18 @@
             if (elem.tagName.toLowerCase() === "video") {
                 var usernamae = window.prompt("名前を入力してください");
             }
+            setName(username, elem);
         }, true);
+
+        function setName(name, element) {
+            if (name === "" && name === "null") {
+                return
+            } else {
+                NamedElement[name] = element;
+            }
+        }
+        function getElement(name) {
+            return NamedElement[name];
+        }
     </script>
 </html>
