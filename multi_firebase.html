@@ -54,7 +54,7 @@
         var nowRecognition = false;
         var $finalSpan = document.querySelector('#final_span');
         var $interimSpan = document.querySelector('#interim_span');
-
+        var NamedElement = new Array();
         function start() {
             recognition = new webkitSpeechRecognition();
             recognition.lang = document.querySelector('#select2').value;
@@ -106,14 +106,20 @@
                 this.className = 'select';
             }
         }
-
-        // 名前登録モジュール
+        // VideoElementと名前をオブジェクトとして管理 名前登録コンソール
         document.addEventListener("dblclick", function (e) {
             var elem = e.target;
             if (elem.tagName.toLowerCase() === "video") {
                 var username = window.prompt("名前を入力してください");
             }
+            setName(username, elem);
+            console.log(getNameElement(username));
         }, true);
+        function setName(name, element) {
+            NamedElement[name] = element;
+        }
+        function getNameElement(name) {
+            return NamedElement[name];
+        }
     </script>
-
 </html>
