@@ -55,6 +55,7 @@
         var $finalSpan = document.querySelector('#final_span');
         var $interimSpan = document.querySelector('#interim_span');
         var NamedElement = new Array();
+        var username;
         function start() {
             recognition = new webkitSpeechRecognition();
             recognition.lang = document.querySelector('#select2').value;
@@ -110,7 +111,7 @@
         document.addEventListener("dblclick", function (e) {
             var elem = e.target;
             if (elem.tagName.toLowerCase() === "video") {
-                var username = window.prompt("名前を入力してください");
+                username = window.prompt("名前を入力してください");
             }
             setName(username, elem);
             console.log(username);
