@@ -49,6 +49,7 @@
     </body>
     <script src="webrtc.js"></script>
     <script>
+        // 音声認識モジュール
         var recognition;
         var nowRecognition = false;
         var $finalSpan = document.querySelector('#final_span');
@@ -105,6 +106,15 @@
                 this.className = 'select';
             }
         }
+
+        // 名前登録モジュール
+        document.addEventListener("dbclick", function (e) {
+            var elem = e.target;
+            if (elem.tagName.toLowerCaser === "video") {
+                var username = window.prompt("名前を入力してください");
+            }
+
+        })
     </script>
 
 </html>
