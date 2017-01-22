@@ -7,8 +7,7 @@
 
         <!-- <script src"jquery-3.1.1.min.js"></script>
         <script src"jquery-ui.min.js"></script> -->
-        <script src="https://code.jquery.com/jquery-3.1.1.js" integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA=" crossorigin="anonymous"></script>
-        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
         <script src="https://www.gstatic.com/firebasejs/3.6.0/firebase.js"></script>
         <script>
             function _assert(desc, v) {
@@ -57,6 +56,7 @@
         var NamedElement = new Array();
         var username;
         function start() {
+            var usernames = getNameFromNamedElement();
             recognition = new webkitSpeechRecognition();
             recognition.lang = document.querySelector('#select2').value;
             recognition.continuous = true;
@@ -71,63 +71,94 @@
                         interimText += e.results[i][0].transcript;
                     }
                 }
-                //  if(YouSay(finalText,username)){
-                //
-                //  } コンソールに表示
                 $interimSpan.textContent = interimText;
                 $finalSpan.textContent = finalText;
+                if (hasName(finalText, usernames)) {
+                    var a = getYouSayName(finalText, usernames);
+                    var u = getElementByUserName(a);
+                    switchVideoElementByName(e);
+                }
             };
             recognition.start();
             nowRecognition = true;
         };
-        var YouSay = function (str, s) {
-            return str.indexOf(s) > -1;
 
-        }
-        function stop() {
-            recognition.stop();
-            nowRecognition = false;
-        }
-
-        document.querySelector('#btn2').onclick = function () {
-
-            // unsupported.
-            if (!'webkitSpeechRecognition' in window) {
-                alert('Web Speech API には未対応です.');
-                return;
+        function getYouSayName(str, s) {
+            var user;
+            for (var i = 0; i < s.length; i++) {
+                if (str.indexOf(s[i]) > -1) {
+                    user = s[i];
+                }
             }
+            return user;
+        }
 
-            if (nowRecognition) {
-                stop();
-                this.value = '音声認識を継続的に行う';
-                this.className = '';
-            } else {
-                start();
-                this.value = '音声認識を止める';
-                this.className = 'select';
+        function hasName(str, s) {
+            var user = false;
+            for (var i = 0; i < s.length; i++) {
+                if (str.indexOf(s[i]) > -1) {
+                    user = true;
+                }
             }
+            return user;
         }
-        // VideoElementと名前をオブジェクトとして管理 名前登録コンソール
-        document.addEventListener("dblclick", function (e) {
-            var elem = e.target;
-            if (elem.tagName.toLowerCase() === "video") {
-                username = window.prompt("名前を入力してください");
-            }
-            setName(username, elem);
-            console.log("名前:" + username);
-            console.log("エレメントのid:" + elem.id);
-            console.log(NamedElement);
-        }, true);
+    }
+    function stop() {
+        recognition.stop();
+        nowRecognition = false;
+    }
 
-        function setName(name, element) {
-            if (name === "" || name === "null") {
-                return
-            } else {
-                NamedElement[name] = element;
-            }
+    document.querySelector('#btn2').onclick = function () {
+
+        // unsupported.
+        if (!'webkitSpeechRecognition' in window) {
+            alert('Web Speech API には未対応です.');
+            return;
         }
-        function getElement(name) {
-            return NamedElement[name];
+
+        if (nowRecognition) {
+            stop();
+            this.value = '音声認識を継続的に行う';
+            this.className = '';
+        } else {
+            start();
+            this.value = '音声認識を止める';
+            this.className = 'select';
         }
+    }
+    // VideoElementと名前をオブジェクトとして管理
+    document.addEventListener("dblclick", function (e) {
+        var elem = e.target;
+        if (elem.tagName.toLowerCase() === "video") {
+            username = window.prompt("名前を入力してください");
+        }
+        setName(username, elem);
+        console.log("名前:" + username);
+        console.log("エレメントのid:" + elem.id);
+        console.log(NamedElement);
+    }, true);
+
+    function switchVideoElementByName(element) {
+        element.className = "switch";
+    }
+    function setName(name, element) {
+        if (name === "" || name === "null") {
+            return
+        } else {
+            NamedElement[name] = element;
+        }
+    }
+
+    function getNameFromNamedElement() {
+        var names = [];
+        for (var name in NamedElement) {
+            names.push(name);
+        }
+        return names;
+    }
+
+    function getElementByUserName(name) {
+        return NamedElement[name];
+    }
     </script>
 </html>
