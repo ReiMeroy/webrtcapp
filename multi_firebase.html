@@ -54,7 +54,6 @@
         var $finalSpan = document.querySelector('#final_span');
         var $interimSpan = document.querySelector('#interim_span');
         var NamedElement = new Array();
-        var username;
         function start() {
             var usernames = getNameFromNamedElement();
             recognition = new webkitSpeechRecognition();
@@ -73,92 +72,51 @@
                 }
                 $interimSpan.textContent = interimText;
                 $finalSpan.textContent = finalText;
-                if (hasName(finalText, usernames)) {
-                    var a = getYouSayName(finalText, usernames);
-                    var u = getElementByUserName(a);
-                    switchVideoElementByName(e);
-                }
             };
             recognition.start();
             nowRecognition = true;
         };
 
-        function getYouSayName(str, s) {
-            var user;
-            for (var i = 0; i < s.length; i++) {
-                if (str.indexOf(s[i]) > -1) {
-                    user = s[i];
-                }
+        function stop() {
+            recognition.stop();
+            nowRecognition = false;
+        }
+
+        document.querySelector('#btn2').onclick = function () {
+
+            // unsupported.
+            if (!'webkitSpeechRecognition' in window) {
+                alert('Web Speech API には未対応です.');
+                return;
             }
-            return user;
-        }
 
-        function hasName(str, s) {
-            var user = false;
-            for (var i = 0; i < s.length; i++) {
-                if (str.indexOf(s[i]) > -1) {
-                    user = true;
-                }
+            if (nowRecognition) {
+                stop();
+                this.value = '音声認識を継続的に行う';
+                this.className = '';
+            } else {
+                start();
+                this.value = '音声認識を止める';
+                this.className = 'select';
             }
-            return user;
         }
-    }
-    function stop() {
-        recognition.stop();
-        nowRecognition = false;
-    }
-
-    document.querySelector('#btn2').onclick = function () {
-
-        // unsupported.
-        if (!'webkitSpeechRecognition' in window) {
-            alert('Web Speech API には未対応です.');
-            return;
+        // VideoElementと名前をオブジェクトとして管理
+        document.addEventListener("dblclick", function (e) {
+            var elem = e.target;
+            if (elem.tagName.toLowerCase() === "video") {
+                username = window.prompt("名前を入力してください");
+            }
+            setName(username, elem);
+            console.log("名前:" + username);
+            console.log("エレメントのid:" + elem.id);
+            console.log(NamedElement);
+        }, true);
+        function setName(name, element) {
+            if (name === "" || name === "null") {
+                return
+            } else {
+                NamedElement[name] = element;
+            }
         }
-
-        if (nowRecognition) {
-            stop();
-            this.value = '音声認識を継続的に行う';
-            this.className = '';
-        } else {
-            start();
-            this.value = '音声認識を止める';
-            this.className = 'select';
-        }
-    }
-    // VideoElementと名前をオブジェクトとして管理
-    document.addEventListener("dblclick", function (e) {
-        var elem = e.target;
-        if (elem.tagName.toLowerCase() === "video") {
-            username = window.prompt("名前を入力してください");
-        }
-        setName(username, elem);
-        console.log("名前:" + username);
-        console.log("エレメントのid:" + elem.id);
-        console.log(NamedElement);
-    }, true);
-
-    function switchVideoElementByName(element) {
-        element.className = "switch";
-    }
-    function setName(name, element) {
-        if (name === "" || name === "null") {
-            return
-        } else {
-            NamedElement[name] = element;
-        }
-    }
-
-    function getNameFromNamedElement() {
-        var names = [];
-        for (var name in NamedElement) {
-            names.push(name);
-        }
-        return names;
-    }
-
-    function getElementByUserName(name) {
-        return NamedElement[name];
-    }
     </script>
 </html>
