@@ -45,68 +45,27 @@
     </body>
     <script src="webrtc.js"></script>
     <script>
-        // 音声認識モジュール
-        var $finalSpan = document.querySelector('#final_span');
-        var $interimSpan = document.querySelector('#interim_span');
         var NamedElement = new Array();
-        var recognition;
-        var rec_result;
-        var nowRecognition = false;
-        function start() {
-            recognition = new webkitSpeechRecognition();
-            recognition.lang = document.querySelector('#select1').value; // en-US or ja-JP
-            recognition.onresult = function (e) {
-                if (e.results.length > 0) {
-                    rec_result = e.results[0][0].transcript;
-                    document.querySelector('#area1').textContent = value;
-                    // SwitchByName(rec_result);
-                }
+        var username;
 
+        // VideoElementと名前をオブジェクトとして管理
+        document.addEventListener("dblclick", function (e) {
+            var elem = e.target;
+            if (elem.tagName.toLowerCase() === "video") {
+                username = window.prompt("名前を入力してください");
             }
-        };
-        recognition.start();
-        nowRecognition = true;
-    };
-    function stop() {
-        recognition.stop();
-        nowRecognition = false;
-    }
-    document.querySelector('#btn1').onclick = function () {
+            setName(username, elem);
 
-        // unsupported.
-        if (!'webkitSpeechRecognition' in window) {
-            alert('Web Speech API には未対応です.');
-            return;
-        }
+        }, true);
 
-        if (nowRecognition) {
-            stop();
-            this.value = '音声認識を始める';
-            this.className = '';
-        } else {
-            start();
-            this.value = '音声認識を止める';
-            this.className = 'select';
+        function setName(name, element) {
+            if (name === "" || name === null) {
+                return
+            } else {
+                NamedElement[name] = element;
+            }
         }
-    }
-    // VideoElementと名前をオブジェクトとして管理
-    document.addEventListener("dblclick", function (e) {
-        var elem = e.target;
-        if (elem.tagName.toLowerCase() === "video") {
-            username = window.prompt("名前を入力してください");
-        }
-        setName(username, elem);
-
-    }, true);
-
-    function setName(name, element) {
-        if (name === "" || name === null) {
-            return
-        } else {
-            NamedElement[name] = element;
-        }
-    }
-    // function SwitchByName(str) {     var names = [];     var sayname;     for (var name in NamedElement) {         names.push(name);     }     for (var i = 0; i < names.length; i++) {         if (str.indexOf(names[i]) > -1) {             sayname =
-    // names[i];         }         NamedElement[sayname].className = "zoomed";     } }
+        // function SwitchByName(str) {     var names = [];     var sayname;     for (var name in NamedElement) {         names.push(name);     }     for (var i = 0; i < names.length; i++) {         if (str.indexOf(names[i]) > -1) {             sayname =
+        // names[i];         }         NamedElement[sayname].className = "zoomed";     } }
     </script>
 </html>
