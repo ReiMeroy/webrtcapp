@@ -38,12 +38,3 @@
     width: :240px;
     height: 180px;
 }
-
-@import url(//fonts.googleapis.com/earlyaccess/notosansjapanese.css);
-#content {
-    width: 100%
-}
-
-#buttons {
-    margin-top: 40px;
-}
