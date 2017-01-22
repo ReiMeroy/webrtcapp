@@ -60,6 +60,10 @@
                         var str = e.results[i][0].transcript;
                         document.querySelector('#text_content').textContent = str;
                         console.log('Recognised: ' + str);
+                        if (userSaid(str, "斉藤")) {
+                            var e = NamedElement["斉藤"];
+                            e.className = "switch";
+                        }
                     }
                 }
             }
@@ -80,6 +84,7 @@
             if (elem.tagName.toLowerCase() === "video") {
                 username = window.prompt("名前を入力してください");
             }
+
             setName(username, elem);
         }, true);
 

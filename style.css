@@ -38,3 +38,8 @@
     width: :240px;
     height: 180px;
 }
+
+video.switch {
+    width: 550;
+    height: 450;
+}
