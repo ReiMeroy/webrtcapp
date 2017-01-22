@@ -35,20 +35,46 @@
             <video id="local_video" autoplay style="width: 160px; height: 12; border: 1px solid black;"></video>
         </div>
         <div id="container"></div>
-        <h1>Speech Recognition</h1>
-        <div id="area1"></div>
-        <input id="btn1" type="button" value="音声認識を始める"/>
-        <select id="select1">
-            <option value="ja-JP">日本語</option>
-            <option value="en-US">English</option>
-        </select>
+        <div id="text_content"></div>
+        <div id="buttons" class="text-center">
+            <button id="startRecBtn" class="btn btn-default">認識開始</button>
+            <button id="stopRecBtn" class="btn btn-default">認識終了</button>
+        </div>
     </body>
     <script src="webrtc.js"></script>
     <script>
-        var NamedElement = new Array();
-        var username;
+        //音声認識モジュール
+        $(document).ready(function () {
+            var rec = new webkitSpeechRecognition();
+            rec.continuous = true;
+            rec.interimResults = false;
+            rec.lang = 'ja-JP';
+
+            var userSaid = function (str, s) {
+                return str.indexOf(s) > -1;
+            }
+
+            rec.onresult = function (e) {
+                for (var i = e.resultIndex; i < e.results.length; ++i) {
+                    if (e.results[i].isFinal) {
+                        var str = e.results[i][0].transcript;
+                        document.querySelector('#text_content').textContent = str;
+                        console.log('Recognised: ' + str);
+                    }
+                }
+            }
+
+            $("#startRecBtn").click(function () {
+                rec.start();
+            });
+            $("#stopRecBtn").click(function () {
+                rec.stop();
+            });
+        });
 
         // VideoElementと名前をオブジェクトとして管理
+        var NamedElement = new Array();
+        var username;
         document.addEventListener("dblclick", function (e) {
             var elem = e.target;
             if (elem.tagName.toLowerCase() === "video") {
