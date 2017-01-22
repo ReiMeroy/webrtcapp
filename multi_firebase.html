@@ -32,7 +32,7 @@
             <a id="mail_link" href="" target="_blank">Mail link of this room</a>
         </div>
         <div>
-            <video id="local_video" autoplay style="width: 160px; height: 120px; border: 1px solid black;"></video>
+            <video id="local_video" autoplay style="width: 480x; height: 360px; border: 1px solid black;"></video>
         </div>
         <div id="container"></div>
         <h1>Speech Recognition</h1>
@@ -58,6 +58,10 @@
                 if (e.results.length > 0) {
                     var value = e.results[0][0].transcript;
                     document.querySelector('#area1').textContent = value;
+                }
+                if (value.indexOf("斉藤") > -1) {
+                    var e = getElementByname("斉藤");
+                    console.log("取得エレメント" + e);
                 }
             };
             recognition.start();
@@ -102,6 +106,9 @@
             } else {
                 NamedElement[name] = element;
             }
+        }
+        function getElementByname(name) {
+            return NamedElement[name];
         }
     </script>
 </html>
