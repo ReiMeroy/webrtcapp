@@ -34,7 +34,7 @@
     border: 1px solid black;
 }
 
-#remote_video {
+.remote_video {
     width: :240px;
     height: 180px;
 }
