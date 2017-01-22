@@ -1,6 +1,4 @@
-
-/*音声認識フィールド*/
-#area2 {
+#area1 {
     width: 90%;
     height: 3em;
     padding: 10px;
@@ -8,7 +6,7 @@
     border-radius: 3px;
     margin-bottom: 10px;
 }
-#btn2 {
+#btn1 {
     background: -webkit-linear-gradient(top,#008dfd 30%,#0370ea 100%);
     color: white;
     text-shadow: 1px 1px 1px #076bd2;
@@ -18,15 +16,14 @@
     font-weight: 700;
     font-size: 15px;
 }
-#btn2.select {
+#btn1.select {
     background: -webkit-linear-gradient(top,#f2739e 30%,#f23f7b 100%);
     text-shadow: 1px 1px 1px #f1115c;
     border: 1px solid #f1115c;
 }
-#select2 {
+#select1 {
     width: 200px;
 }
-
 #switch{
   position: fixed;
     right: 0;

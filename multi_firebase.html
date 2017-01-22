@@ -35,54 +35,40 @@
             <video id="local_video" autoplay style="width: 160px; height: 120px; border: 1px solid black;"></video>
         </div>
         <div id="container"></div>
-        <h1>Speech Recognition2</h1>
-        <div id="area2">
-            <span class="final" id="final_span"></span>
-            <span class="interim" id="interim_span"></span>
-        </div>
-        <input id="btn2" type="button" value="音声認識を継続的に行う"/>
-        <select id="select2">
+        <h1>Speech Recognition</h1>
+        <div id="area1"></div>
+        <input id="btn1" type="button" value="音声認識を始める"/>
+        <select id="select1">
             <option value="ja-JP">日本語</option>
             <option value="en-US">English</option>
         </select>
+
     </body>
     <script src="webrtc.js"></script>
     <script>
         // 音声認識モジュール
-        var recognition;
-        var nowRecognition = false;
         var $finalSpan = document.querySelector('#final_span');
         var $interimSpan = document.querySelector('#interim_span');
         var NamedElement = new Array();
+        var recognition;
+        var nowRecognition = false;
         function start() {
-            var usernames = getNameFromNamedElement();
             recognition = new webkitSpeechRecognition();
-            recognition.lang = document.querySelector('#select2').value;
-            recognition.continuous = true;
-            recognition.interimResults = true;
+            recognition.lang = document.querySelector('#select1').value; // en-US or ja-JP
             recognition.onresult = function (e) {
-                var finalText = '';
-                var interimText = '';
-                for (var i = 0; i < e.results.length; i++) {
-                    if (e.results[i].isFinal) {
-                        finalText += e.results[i][0].transcript;
-                    } else {
-                        interimText += e.results[i][0].transcript;
-                    }
+                if (e.results.length > 0) {
+                    var value = e.results[0][0].transcript;
+                    document.querySelector('#area1').textContent = value;
                 }
-                $interimSpan.textContent = interimText;
-                $finalSpan.textContent = finalText;
             };
             recognition.start();
             nowRecognition = true;
         };
-
         function stop() {
             recognition.stop();
             nowRecognition = false;
         }
-
-        document.querySelector('#btn2').onclick = function () {
+        document.querySelector('#btn1').onclick = function () {
 
             // unsupported.
             if (!'webkitSpeechRecognition' in window) {
@@ -92,7 +78,7 @@
 
             if (nowRecognition) {
                 stop();
-                this.value = '音声認識を継続的に行う';
+                this.value = '音声認識を始める';
                 this.className = '';
             } else {
                 start();
