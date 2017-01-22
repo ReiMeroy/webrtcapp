@@ -32,7 +32,7 @@
             <a id="mail_link" href="" target="_blank">Mail link of this room</a>
         </div>
         <div>
-            <video id="local_video" autoplay style="width: 160px; height: 12; border: 1px solid black;"></video>
+            <video id="local_video" autoplay></video>
         </div>
         <div id="container"></div>
         <div id="text_content"></div>
@@ -81,7 +81,6 @@
                 username = window.prompt("名前を入力してください");
             }
             setName(username, elem);
-
         }, true);
 
         function setName(name, element) {
