@@ -32,7 +32,7 @@
             <a id="mail_link" href="" target="_blank">Mail link of this room</a>
         </div>
         <div>
-            <video id="local_video" autoplay style="width: 160px; height: auto; border: 1px solid black;"></video>
+            <video id="local_video" autoplay style="width: 160px; height: 12; border: 1px solid black;"></video>
         </div>
         <div id="container"></div>
         <h1>Speech Recognition</h1>
@@ -59,7 +59,7 @@
                 if (e.results.length > 0) {
                     rec_result = e.results[0][0].transcript;
                     document.querySelector('#area1').textContent = value;
-
+                    // SwitchByName(rec_result);
                 }
 
             }
@@ -106,19 +106,7 @@
             NamedElement[name] = element;
         }
     }
-
-    function SwitchByName(str) {
-        var names = [];
-        var sayname;
-        for (var name in NamedElement) {
-            names.push(name);
-        }
-        for (var i = 0; i < names.length; i++) {
-            if (str.indexOf(names[i]) > -1) {
-                sayname = names[i];
-            }
-            NamedElement[sayname].className = "zoomed";
-        }
-    }
+    // function SwitchByName(str) {     var names = [];     var sayname;     for (var name in NamedElement) {         names.push(name);     }     for (var i = 0; i < names.length; i++) {         if (str.indexOf(names[i]) > -1) {             sayname =
+    // names[i];         }         NamedElement[sayname].className = "zoomed";     } }
     </script>
 </html>
