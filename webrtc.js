@@ -263,8 +263,6 @@ function deleteRemoteVideoElement(id) {
 
 function createVideoElement(elementId) {
     let video = document.createElement('video')
-    video.width = "240";
-    video.height = "180";
     video.id = elementId;
     video.className = "remote_video";
     video.style.border = 'solid black 1px';
@@ -273,17 +271,6 @@ function createVideoElement(elementId) {
     return video;
 }
 
-function getWindowHeight() {
-    var height = window.innerHeight / 2
-    return height;
-}
-console.log(getWindowHeight());
-
-function getWindowWidth() {
-    var width = window.innerWidth / 2;
-    return width;
-}
-console.log(getWindowWidth());
 
 function removeVideoElement(elementId) {
     let video = document.getElementById(elementId);

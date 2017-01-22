@@ -50,65 +50,75 @@
         var $interimSpan = document.querySelector('#interim_span');
         var NamedElement = new Array();
         var recognition;
+        var rec_result;
         var nowRecognition = false;
         function start() {
             recognition = new webkitSpeechRecognition();
             recognition.lang = document.querySelector('#select1').value; // en-US or ja-JP
             recognition.onresult = function (e) {
                 if (e.results.length > 0) {
-                    var value = e.results[0][0].transcript;
+                    rec_result = e.results[0][0].transcript;
                     document.querySelector('#area1').textContent = value;
+
                 }
-                if (value.indexOf("斉藤") > -1) {
-                    var e = getElementByname("斉藤");
-                    console.log("取得エレメント" + e);
-                }
-            };
-            recognition.start();
-            nowRecognition = true;
+
+            }
         };
-        function stop() {
-            recognition.stop();
-            nowRecognition = false;
-        }
-        document.querySelector('#btn1').onclick = function () {
+        recognition.start();
+        nowRecognition = true;
+    };
+    function stop() {
+        recognition.stop();
+        nowRecognition = false;
+    }
+    document.querySelector('#btn1').onclick = function () {
 
-            // unsupported.
-            if (!'webkitSpeechRecognition' in window) {
-                alert('Web Speech API には未対応です.');
-                return;
-            }
+        // unsupported.
+        if (!'webkitSpeechRecognition' in window) {
+            alert('Web Speech API には未対応です.');
+            return;
+        }
 
-            if (nowRecognition) {
-                stop();
-                this.value = '音声認識を始める';
-                this.className = '';
-            } else {
-                start();
-                this.value = '音声認識を止める';
-                this.className = 'select';
-            }
+        if (nowRecognition) {
+            stop();
+            this.value = '音声認識を始める';
+            this.className = '';
+        } else {
+            start();
+            this.value = '音声認識を止める';
+            this.className = 'select';
         }
-        // VideoElementと名前をオブジェクトとして管理
-        document.addEventListener("dblclick", function (e) {
-            var elem = e.target;
-            if (elem.tagName.toLowerCase() === "video") {
-                username = window.prompt("名前を入力してください");
-            }
-            setName(username, elem);
-            console.log("名前:" + username);
-            console.log("エレメントのid:" + elem.id);
-            console.log(NamedElement);
-        }, true);
-        function setName(name, element) {
-            if (name === "" || name === null) {
-                return
-            } else {
-                NamedElement[name] = element;
-            }
+    }
+    // VideoElementと名前をオブジェクトとして管理
+    document.addEventListener("dblclick", function (e) {
+        var elem = e.target;
+        if (elem.tagName.toLowerCase() === "video") {
+            username = window.prompt("名前を入力してください");
         }
-        function getElementByname(name) {
-            return NamedElement[name];
+        setName(username, elem);
+
+    }, true);
+
+    function setName(name, element) {
+        if (name === "" || name === null) {
+            return
+        } else {
+            NamedElement[name] = element;
         }
+    }
+
+    function SwitchByName(str) {
+        var names = [];
+        var sayname;
+        for (var name in NamedElement) {
+            names.push(name);
+        }
+        for (var i = 0; i < names.length; i++) {
+            if (str.indexOf(names[i]) > -1) {
+                sayname = names[i];
+            }
+            NamedElement[sayname].className = "zoomed";
+        }
+    }
     </script>
 </html>
