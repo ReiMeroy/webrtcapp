@@ -70,13 +70,15 @@
                         var str = e.results[i][0].transcript;
                         document.querySelector('#text_content').textContent = str;
                         console.log('Recognised: ' + str);
+                        console.log(getName());
                         var sayname = SayName(str);
+                        console.log(sayname);
                         if (userSaid(str, sayname)) {
                             var e = NamedElement[sayname];
                             $(e).css("width", "400px");
                             $(e).css("height", "300px");
                             console.log(e);
-                            console.log(getName());
+
                         }
                     }
                 }
