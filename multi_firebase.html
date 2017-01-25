@@ -53,6 +53,7 @@
             var userSaid = function (str, s) {
                 return str.indexOf(s) > -1;
             }
+
             function isName(str) {
                 var names = getName();
                 for (var i = 0; i < names.length; i++) {
@@ -82,7 +83,7 @@
                         congole.log("names" + names);
                         var sayname = getSayName();
                         console.log("sayname" + sayname);
-                        if (isName(str) {
+                        if (isName(str)) {
                             var e = NamedElement[sayname];
                             $(e).css("width", "400px");
                             $(e).css("height", "300px");
