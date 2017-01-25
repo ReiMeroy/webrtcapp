@@ -62,9 +62,8 @@
                         console.log('Recognised: ' + str);
                         if (userSaid(str, "斉藤")) {
                             var e = NamedElement["斉藤"];
-                            e.className = "switch";
+                            $(e).addClass('switch');
                             console.log(e);
-                            console.log('サクセス');
                         }
                     }
                 }

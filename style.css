@@ -35,11 +35,11 @@
 }
 
 .remote_video {
-    width: :240px;
+    width: 240px;
     height: 180px;
 }
 
-video.switch {
+.switch {
     width: 550px;
     height: 450px;
 }
