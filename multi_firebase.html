@@ -54,40 +54,18 @@
                 return str.indexOf(s) > -1;
             }
 
-            function isName(str) {
-                var names = getName();
-                for (var i = 0; i < names.length; i++) {
-                    if (str.indexOf(names[i]) > -1) {
-                        var flag = true;
-                    }
-                }
-                return flag;
-            }
-
-            function getSayName() {
-                var names = getName();
-                for (var i = 0; i < names.length; i++) {
-                    if (str.indexOf(names[i]) > -1) {
-                        var name = names[i];
-                    }
-                }
-                return name;
-            }
             rec.onresult = function (e) {
                 for (var i = e.resultIndex; i < e.results.length; ++i) {
                     if (e.results[i].isFinal) {
                         var str = e.results[i][0].transcript;
                         document.querySelector('#text_content').textContent = str;
                         console.log('Recognised: ' + str);
-                        var names = getName();
-                        congole.log("names" + names);
-                        var sayname = getSayName();
-                        console.log("sayname" + sayname);
-                        if (isName(str)) {
-                            var e = NamedElement[sayname];
+                        if (userSaid(str, "斉藤")) {
+                            var e = NamedElement["斉藤"];
                             $(e).css("width", "400px");
                             $(e).css("height", "300px");
                             console.log(e);
+                            console.log(getName());
                         }
                     }
                 }
