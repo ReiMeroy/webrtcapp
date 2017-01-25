@@ -53,15 +53,26 @@
             var userSaid = function (str, s) {
                 return str.indexOf(s) > -1;
             }
-
+            
+            function SayName(str) {
+                var names = getName();
+                var sayname;
+                for (var i = 0; i < names.lencth; i++) {
+                    if (str.indexOf(names[i]) > -1) {
+                        sayname = names[i];
+                    }
+                }
+                return sayname;
+            }
             rec.onresult = function (e) {
                 for (var i = e.resultIndex; i < e.results.length; ++i) {
                     if (e.results[i].isFinal) {
                         var str = e.results[i][0].transcript;
                         document.querySelector('#text_content').textContent = str;
                         console.log('Recognised: ' + str);
-                        if (userSaid(str, "斉藤")) {
-                            var e = NamedElement["斉藤"];
+                        var sayname = SayName(str);
+                        if (userSaid(str, sayname)) {
+                            var e = NamedElement[sayname];
                             $(e).css("width", "400px");
                             $(e).css("height", "300px");
                             console.log(e);
