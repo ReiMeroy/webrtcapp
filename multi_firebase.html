@@ -62,13 +62,13 @@
                         console.log('Recognised: ' + str);
                         if (userSaid(str, "斉藤")) {
                             var e = NamedElement["斉藤"];
-                            $(e).addClass('switch');
+                            $(e).css("width", "400px");
+                            $(e).css("height", "300px");
                             console.log(e);
                         }
                     }
                 }
             }
-
             $("#startRecBtn").click(function () {
                 rec.start();
             });
