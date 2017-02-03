@@ -1,4 +1,5 @@
 let localVideo = document.getElementById('local_video');
+let RemoteMyVideoID = null;
 //let remoteVideo = document.getElementById('remote_video');
 let localStream = null;
 //let peerConnection = null; let textForSendSdp = document.getElementById('text_for_send_sdp'); let textToReceiveSdp = document.getElementById('text_for_receive_sdp'); ---- for multi party -----
@@ -40,6 +41,8 @@ function joinRoom(room) {
         joined: 'unknown'
     }).key
     clientId = 'member_' + key;
+    RemoteMyVideoID = 'remote_video_' + clientId;
+    console.log("取得したVideoElementのIDは" + RemoteMyVideID);
     console.log('joined to room=' + room + ' as clientId=' + clientId);
     database.ref(databaseRoot + room + '/_join_/' + key).update({
         joined: clientId
@@ -156,6 +159,10 @@ function getRoomName() { // たとえば、 URLに  ?roomname  とする
     let room = 'room_' + getUniqueStr();
     window.history.pushState(null, null, 'multi_firebase.html?' + room);
     return room;
+}
+
+function getMyRemoteVideoid() {
+    return RemoteMyVideoID;
 }
 // http://qiita.com/coa00@github/items/679b0b5c7c468698d53f 疑似ユニークIDを生成
 function getUniqueStr(myStrong) {

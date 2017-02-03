@@ -75,8 +75,7 @@
                         console.log(sayname);
                         if (userSaid(str, sayname)) {
                             var e = NamedElement[sayname];
-                            $(e).css("width", "600px");
-                            $(e).css("height", "450px");
+                            switchbyname(e);
                             console.log(e);
 
                         }
@@ -104,8 +103,8 @@
         }, true);
 
         function switchbyname(e) {
-            $(e).css("width", "400px");
-            $(e).css("height", "300px");
+            $(e).css("width", "600px");
+            $(e).css("height", "450px");
         }
         function getName() {
             var names = [];
