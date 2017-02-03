@@ -638,7 +638,6 @@
                     if (text === '')
                         return;
                     $.each(peer.connections, function (_id, _conn) {
-                        console.log(peer.connections);
                         _conn[0].send({message: text, ids: [myId]});
                     });
                     inputMessage(myId, text);
@@ -662,9 +661,11 @@
                     var ids = data.ids;
                     var message = data.message;
                     console.log('受信したメッセージは' + message);
+                    console.log(id);
+                    console.log(ids);
                     var state = data.state;
-                    var myvideoid = data.videoid;
-                    console.log('認識したIDは' + myvideoid);
+                    var remotevideoid = data.videoid;
+                    console.log('認識したIDは' + remotevideoid);
                     console.log('音声認識の状態は' + state);
                     $.each(peer.connections, function (_id, _conn) {
                         console.log(peer.connections);
