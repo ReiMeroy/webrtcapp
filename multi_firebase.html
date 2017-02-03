@@ -618,6 +618,7 @@
             var myId = String(Math.ceil(Math.random() * 1000 + 100));
             var peer = new Peer(myId, {key: PEERJS_ID});
             var myVideoId = getMyRemoteVideoid();
+            console.log('私のVideIdは' + myVideoId);
             var rec = new webkitSpeechRecognition();
             rec.continuous = false;
             rec.interimResults = false;
@@ -645,7 +646,7 @@
                 rec.onspeechstart = function () {
                     console.log('Speech has been detected');
                     $.each(peer.connections, function (_id, _conn) {
-                        _conn[0].send({state: "start", videid: myVideoId});
+                        _conn[0].send({state: "start", videoid: myVideoId});
                         console.log('サクセス');
                     });
                 }
