@@ -64,10 +64,6 @@
     <script>
         //  音声認識モジュール
         $(document).ready(function () {
-            var rec = new webkitSpeechRecognition();
-            rec.continuous = true;
-            rec.interimResults = false;
-            rec.lang = 'ja-JP';
             // 音声処理モジュール
             var PEERJS_ID = '6f0d6813-40ff-4369-abe7-95c5983b8d67';
             var myId = String(Math.ceil(Math.random() * 1000 + 100));
@@ -131,6 +127,10 @@
             var userSaid = function (str, s) {
                 return str.indexOf(s) > -1;
             }
+            var rec = new webkitSpeechRecognition();
+            rec.continuous = false;
+            rec.interimResults = false;
+            rec.lang = 'ja-JP';
 
             function SayName(str) {
                 var names = getName();
