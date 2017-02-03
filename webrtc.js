@@ -42,7 +42,7 @@ function joinRoom(room) {
     }).key
     clientId = 'member_' + key;
     RemoteMyVideoID = 'remote_video_' + clientId;
-    console.log("取得したVideoElementのIDは" + RemoteMyVideoID);
+    console.log("取得したVideoElementのIDは" + getMyRemoteVideoid());
     console.log('joined to room=' + room + ' as clientId=' + clientId);
     database.ref(databaseRoot + room + '/_join_/' + key).update({
         joined: clientId

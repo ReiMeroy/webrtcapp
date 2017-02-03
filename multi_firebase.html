@@ -37,8 +37,7 @@
                 <video id="local_video" autoplay></video>
             </div>
             <h1>
-                <small>My ID:
-                </small>
+                <small>My ID:</small>
                 <span id="myId"></span>
             </h1>
             <div class="connects">
@@ -70,7 +69,6 @@
             var peer = new Peer(myId, {key: PEERJS_ID});
 
             $('#myId').text(myId);
-
             var inputMessage = function (id, message) {
                 $('#messageData').prepend($('<div/>').text(id + ': ' + message));
             };
@@ -84,12 +82,14 @@
                     if (text === '')
                         return;
                     $.each(peer.connections, function (_id, _conn) {
+                        console.log("id:" + _id + "conn" + _conn)
                         _conn[0].send({message: text, ids: [myId]});
                     });
                     inputMessage(myId, text);
                 });
 
                 conn.on('data', function (data) {
+                    console.log("取得したデータ" ： + data);
                     var id = data.ids[0];
                     var ids = data.ids;
                     var message = data.message;
@@ -100,6 +100,7 @@
                         }
                     });
                     inputMessage(id, message);
+
                 });
             };
 
@@ -127,6 +128,7 @@
             var userSaid = function (str, s) {
                 return str.indexOf(s) > -1;
             }
+
             var rec = new webkitSpeechRecognition();
             rec.continuous = false;
             rec.interimResults = false;
@@ -142,6 +144,9 @@
                 }
                 return sayname;
             }
+
+            // recognition.onspeechstart = function () {     var myRemoteID = getMyRemoteVideoid();     console.log('Speech has been detected');     $.each(peer.connections, function (_id, _conn) {         _conn[0].send({message: 'start', id: myRemoteID}); }); }
+            // rec.onspeechend = function () {     console.log('Speech has stopped being detected');     $.each(peer.connections, function (_id, _conn) {         _conn[0].send({message: 'stop', id: myRemoteID});     }); }
             rec.onresult = function (e) {
                 for (var i = e.resultIndex; i < e.results.length; ++i) {
                     if (e.results[i].isFinal) {
@@ -198,7 +203,5 @@
                 NamedElement[name] = element;
             }
         }
-        // function SwitchByName(str) {     var names = [];     var sayname;     for (var name in NamedElement) {         names.push(name);     }     for (var i = 0; i < names.length; i++) {         if (str.indexOf(names[i]) > -1) {             sayname =
-        // names[i];         }         NamedElement[sayname].className = "zoomed";     } }
     </script>
 </html>
