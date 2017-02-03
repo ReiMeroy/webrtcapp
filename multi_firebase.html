@@ -643,19 +643,18 @@
                     });
                     inputMessage(myId, text);
                 });
-
                 rec.onspeechstart = function () {
                     console.log('Speech has been detected');
                     $.each(peer.connections, function (_id, _conn) {
-                        console.log(peer.connections);
                         _conn[0].send({state: "start", videid: myVideoId});
+                        console.log('サクセス');
                     });
                 }
                 rec.onspeechend = function () {
                     console.log('Speechend has been detected');
                     $.each(peer.connections, function (_id, _conn) {
-                        console.log(peer.connections);
                         _conn[0].send({state: "end", videoid: myVideoId});
+                        console.log('サクセス');
                     });
                 }
                 conn.on('data', function (data) {
@@ -664,6 +663,8 @@
                     var message = data.message;
                     var state = data.state;
                     var myvideoid = data.videoid;
+                    console.log('認識したIDは' + myvideoid);
+                    console.log('音声認識の状態は' + state);
                     $.each(peer.connections, function (_id, _conn) {
                         console.log(peer.connections);
                         if ($.inArray(_id, ids) == -1) {
@@ -673,11 +674,11 @@
                     });
                     inputMessage(id, message);
                     if (state === 'start') {
-                        var e = document.getElementById(myVideoId);
+                        var e = document.getElementById(myvideoid);
                         switchbyname(e);
                     }
                     if (state === 'end') {
-                        var e = document.getElementById(myVideoId);
+                        var e = document.getElementById(myvideoid);
                         zoomout(e);
                     }
                 });
@@ -704,6 +705,7 @@
             peer.on('connection', function (conn) {
                 connect(conn);
             });
+
             var userSaid = function (str, s) {
                 return str.indexOf(s) > -1;
             }
