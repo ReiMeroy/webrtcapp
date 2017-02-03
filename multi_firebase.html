@@ -82,7 +82,7 @@
                     if (text === '')
                         return;
                     $.each(peer.connections, function (_id, _conn) {
-                        console.log("id:" + _id + "conn:" + _conn)
+                        console.log("id:" + _id + "conn:" + _conn[0]);
                         _conn[0].send({message: text, ids: [myId]});
                     });
                     inputMessage(myId, text);
