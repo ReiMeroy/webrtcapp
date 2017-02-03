@@ -30,6 +30,9 @@
             <a id="mail_link" href="" target="_blank">Mail link of this room</a>
         </div>
         <div>
+            <div>
+                <video id="local_video" autoplay></video>
+            </div>
             <h1>
                 <small>My ID:
                 </small>
@@ -39,10 +42,6 @@
                 <input id="connect"></input>
                 <span id="connectButton" class="btn btn-primary">Connect</span>
             </div>
-            <div>
-                <video id="local_video" autoplay></video>
-            </div>
-
             <div class="connected"></div>
             <div class="messages">
                 <input id="message"></input>
@@ -60,11 +59,6 @@
     </body>
     <script src="webrtc.js"></script>
     <script>
-        // 音声処理モジュール
-        var PEERJS_ID = '6f0d6813-40ff-4369-abe7-95c5983b8d67';
-        var myId = String(Math.ceil(Math.random() * 1000 + 100));
-        var peer = new Peer(myId, {key: PEERJS_ID});
-        $('#myId').text(myId);
 
         //  音声認識モジュール
         $(document).ready(function () {
@@ -72,7 +66,7 @@
             rec.continuous = true;
             rec.interimResults = false;
             rec.lang = 'ja-JP';
-
+            // 音声処理モジュール
             var PEERJS_ID = '6f0d6813-40ff-4369-abe7-95c5983b8d67';
             var myId = String(Math.ceil(Math.random() * 1000 + 100));
             var peer = new Peer(myId, {key: PEERJS_ID});
