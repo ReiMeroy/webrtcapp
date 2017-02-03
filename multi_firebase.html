@@ -82,18 +82,18 @@
                     if (text === '')
                         return;
                     $.each(peer.connections, function (_id, _conn) {
-                        console.log("id:" + _id + "conn:" + _conn[0]);
+                        console.log(peer.connections);
                         _conn[0].send({message: text, ids: [myId]});
                     });
                     inputMessage(myId, text);
                 });
 
                 conn.on('data', function (data) {
-                    console.log("取得したデータ：" + data);
                     var id = data.ids[0];
                     var ids = data.ids;
                     var message = data.message;
                     $.each(peer.connections, function (_id, _conn) {
+                        console.log(peer.connections);
                         if ($.inArray(_id, ids) == -1) {
                             ids.push(myId);
                             _conn[0].send({message: message, ids: ids});
