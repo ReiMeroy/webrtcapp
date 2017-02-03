@@ -121,8 +121,7 @@
                     return;
                 var conn = peer.connect(id, {'serialization': 'binary-utf8'});
                 conn.on('open', function () {
-
-                    (conn);
+                    connect(conn);
                 });
             });
 
