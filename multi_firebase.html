@@ -640,13 +640,14 @@
                      });
                      inputMessage(myId, text);
                  });
-                 */
+               */
                 rec.onspeechstart = function () {
                     console.log('Speech has been detected');
                     $.each(peer.connections, function (_id, _conn) {
                         _conn[0].send({state: "start", ids: [myId], videoid: myVideoId});
                         console.log('サクセス');
                     });
+                    inputMessage('start', myVideoId);
                 }
                 rec.onspeechend = function () {
                     console.log('Speechend has been detected');
@@ -654,6 +655,7 @@
                         _conn[0].send({state: "end", ids: [myId], videoid: myVideoId});
                         console.log('サクセス');
                     });
+                    inputMessage('end', myVideoId);
                 }
                 conn.on('data', function (data) {
                     var id = data.ids[0];
