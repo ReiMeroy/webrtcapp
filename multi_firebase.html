@@ -618,7 +618,6 @@
             var myId = String(Math.ceil(Math.random() * 1000 + 100));
             var peer = new Peer(myId, {key: PEERJS_ID});
             var myVideoId = getMyRemoteVideoid();
-            console.log('私のVideIdは' + myVideoId);
             var rec = new webkitSpeechRecognition();
             rec.continuous = false;
             rec.interimResults = false;
@@ -628,55 +627,48 @@
             var inputMessage = function (id, message) {
                 $('#messageData').prepend($('<div/>').text(id + ': ' + message));
             };
-            var inputSpeechState = function (id, state) {
-                $('#messageData').prepend($('<div/>').text(id + ': ' + state));
-            };
+
             var connect = function (conn) {
                 $('.connected').prepend($('<div/>').text('ID: ' + conn.peer + 'と通信中'));
-                $('#sendMessage').click(function () {
-                    var text = $('#message').val();
-                    $('#message').val('');
-                    if (text === '')
-                        return;
-                    $.each(peer.connections, function (_id, _conn) {
-                        _conn[0].send({message: text, ids: [myId]});
-                    });
-                    inputMessage(myId, text);
-                });
+                /* $('#sendMessage').click(function () {
+                     var text = $('#message').val();
+                     $('#message').val('');
+                     if (text === '')
+                         return;
+                     $.each(peer.connections, function (_id, _conn) {
+                         _conn[0].send({message: text, ids: [myId]});
+                     });
+                     inputMessage(myId, text);
+                 });
+                 */
                 rec.onspeechstart = function () {
                     console.log('Speech has been detected');
                     $.each(peer.connections, function (_id, _conn) {
-                        _conn[0].send({state: "start", videoid: myVideoId});
+                        _conn[0].send({state: "start", ids: [myId], videoid: myVideoId});
                         console.log('サクセス');
                     });
                 }
                 rec.onspeechend = function () {
                     console.log('Speechend has been detected');
                     $.each(peer.connections, function (_id, _conn) {
-                        _conn[0].send({state: "end", videoid: myVideoId});
+                        _conn[0].send({state: "end", ids: [myId], videoid: myVideoId});
                         console.log('サクセス');
                     });
                 }
                 conn.on('data', function (data) {
                     var id = data.ids[0];
                     var ids = data.ids;
-                    var message = data.message;
-                    console.log('受信したメッセージは' + message);
-                    console.log(id);
-                    console.log(ids);
                     var state = data.state;
                     var remotevideoid = data.videoid;
-                    console.log('認識したIDは' + remotevideoid);
-                    console.log('音声認識の状態は' + state);
+
                     $.each(peer.connections, function (_id, _conn) {
-                        console.log(peer.connections);
                         if ($.inArray(_id, ids) == -1) {
                             ids.push(myId);
-                            _conn[0].send({message: message, ids: ids});
+                            _conn[0].send({state: state, ids: ids, videoid: remotevideoid});
                         }
                     });
-                    inputMessage(id, message);
-                    if (state === 'start') {
+                    inputMessage(remotevideoid, state);
+                    /*  if (state === 'start') {
                         var e = document.getElementById(myvideoid);
                         switchbyname(e);
                     }
@@ -684,9 +676,9 @@
                         var e = document.getElementById(myvideoid);
                         zoomout(e);
                     }
+                    */
                 });
             };
-
             $('#connectButton').click(function () {
                 var id = $('#connect').val();
                 if (id === '')
