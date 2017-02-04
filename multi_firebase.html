@@ -647,7 +647,7 @@
                         _conn[0].send({state: "start", ids: [myId], videoid: myVideoId});
                         console.log('サクセス');
                     });
-                    inputMessage('start', myVideoId);
+                    inputMessage(myVideoId, 'start');
                 }
                 rec.onspeechend = function () {
                     console.log('Speechend has been detected');
@@ -655,7 +655,7 @@
                         _conn[0].send({state: "end", ids: [myId], videoid: myVideoId});
                         console.log('サクセス');
                     });
-                    inputMessage('end', myVideoId);
+                    inputMessage(myVideoId, 'end');
                 }
                 conn.on('data', function (data) {
                     var id = data.ids[0];
