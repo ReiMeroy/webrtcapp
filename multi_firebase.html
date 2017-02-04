@@ -668,12 +668,17 @@
                         }
                     });
                     inputMessage(remotevideoid, state);
+
                     if (state === 'start') {
                         var e = document.getElementById(remotevideoid);
+                        console.log(remotevideoid);
+                        console.log(e);
                         switchbyname(e);
                     }
                     if (state === 'end') {
                         var e = document.getElementById(remotevideoid);
+                        console.log(remotevideoid);
+                        console.log(e);
                         zoomout(e);
                     }
 
