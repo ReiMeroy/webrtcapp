@@ -720,8 +720,6 @@
                 }
                 return sayname;
             }
-            // recognition.onspeechstart = function () {     var myRemoteID = getMyRemoteVideoid();     console.log('Speech has been detected');     $.each(peer.connections, function (_id, _conn) {         _conn[0].send({message: 'start', id: myRemoteID}); }); }
-            // rec.onspeechend = function () {     console.log('Speech has stopped being detected');     $.each(peer.connections, function (_id, _conn) {         _conn[0].send({message: 'stop', id: myRemoteID});     }); }
             rec.onresult = function (e) {
                 for (var i = e.resultIndex; i < e.results.length; ++i) {
                     if (e.results[i].isFinal) {
@@ -758,14 +756,14 @@
             console.log(NamedElement);
         }, true);
 
-        /*function switchbyname(e) {
+        function switchbyname(e) {
             $(.remote_video).hide();
             $(e).show();
             $(e).css("width", "400px");
             $(e).css("height", "300px");
             $(e).css("margin", "auto");
         }
-        */
+
         function zoomin(e) {
             $(e).css("width", "360px");
             $(e).css("height", "270px");
