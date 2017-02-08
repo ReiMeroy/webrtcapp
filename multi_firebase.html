@@ -731,7 +731,7 @@
                         console.log(sayname);
                         if (userSaid(str, sayname)) {
                             var e = NamedElement[sayname];
-                            zoomin(e);
+                            switchbyname(e);
                             console.log(e);
                         }
                     }
@@ -756,14 +756,14 @@
             console.log(NamedElement);
         }, true);
 
-        /*function switchbyname(e) {
-            $(.remote_video).hide();
+        function switchbyname(e) {
+            $('.remote_video').hide();
             $(e).show();
             $(e).css("width", "400px");
             $(e).css("height", "300px");
             $(e).css("margin", "auto");
         }
-*/
+
         function zoomin(e) {
             $(e).css("width", "360px");
             $(e).css("height", "270px");
