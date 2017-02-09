@@ -40,6 +40,6 @@
 }
 
 .switch {
-    width: 600px;
-    height: 450px;
+    display: inline-block;
+    text-align: center;
 }
